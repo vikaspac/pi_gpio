@@ -157,6 +157,72 @@ Thats why driver helps in the process which does the following things.
 			#make clean
 	```
 
+**Chapter03**
+	```sh
+    This is in continuation of above Chapter02.
+	This is about toggling GPIO pin with userspace sparogram and its associated driver. This does below things:
+
+	1)	Know about the Makefile
+			#vim Makefile
+	2)	Create a gpio_driver.c add the necessary code.
+			#vim lll_proc_driver.c
+	3)	Compile the code. Then this generates the kernel module *.ko
+			#make
+	4)	Insert the kernel module into the driver. you'll see __init func executed.
+			#sudo insmod lll_proc_driver.ko
+	5)  Check in the ls /proc . You'll see our driver in he procfs. i.e, lll_gpio
+
+            pi@raspberrypi:~/workspace/projects/vikas/pi_gpio/chapter02 $ ls /proc/
+            1     1049  1140  1439  213  28   36   43   51   594  639  653  702  850  asound       diskstats    kallsyms       locks         slabinfo       uptime
+            10    105   1141  15    23   29   38   431  523  6    64   66   739  874  buddyinfo    driver       keys           meminfo       softirqs       version
+            102   106   12    156   232  293  4    44   527  62   642  67   75   886  bus          execdomains  key-users      misc          stat           vmallocinfo
+            1029  107   1220  16    233  3    40   45   53   621  643  677  757  889  cgroups      fb           kmsg           modules       swaps          vmstat
+            103   11    1228  17    234  30   406  46   54   63   648  678  76   890  cmdline      filesystems  kpagecgroup    mounts        sys            zoneinfo
+            1031  1127  1235  178   235  301  41   47   55   631  649  679  767  9    consoles     fs           kpagecount     net           sysrq-trigger
+            1032  1129  13    18    24   314  411  483  56   632  65   68   774  909  cpuinfo      interrupts   kpageflags     pagetypeinfo  sysvipc
+            1033  1130  136   19    249  33   417  49   57   633  650  683  794  910  crypto       iomem        latency_stats  partitions    thread-self
+            104   1133  1384  2     25   34   419  5    574  634  651  692  808  95   devices      ioports      **lll-gpio**       schedstat     timer_list
+            1048  1134  14    20    250  35   42   50   59   635  652  696  848  97   device-tree  irq          loadavg        self          tty
+
+	6)	Compile the userspace prgram called blink.c:
+            Compilation command below:
+            #gcc -o blink blink.c
+
+	7)  Run the userspace program and check the o/p in the dmesg.
+			#./blink
+
+            #dmesg
+
+             [10401.944249] Welcome to my driver!
+             [10401.944272] Successfully mapped in GPIO memory
+             [10443.684855] Data buffer: 21,1
+             [10443.684871] You said pin 21, value 1
+             [10444.184993] Data buffer: 21,0
+             [10444.185012] You said pin 21, value 0
+             [10444.685123] Data buffer: 21,1
+             [10444.685137] You said pin 21, value 1
+             [10445.185246] Data buffer: 21,0
+             [10445.185262] You said pin 21, value 0
+             [10445.685375] Data buffer: 21,1
+             [10445.685389] You said pin 21, value 1
+             [10446.185498] Data buffer: 21,0
+             [10446.185511] You said pin 21, value 0
+             [10446.685617] Data buffer: 21,1
+
+	6)	Remove the kernel module from the driver. You'll see__exit func executed.
+			#sudo rmmod lll_proc_driver.ko
+	7)	To clean the complete project
+			#make clean
+	```
+
+
+## History
+NA
+
+
+## Credits
+	1) source_URL: https://www.youtube.com/watch?v=lWzFFusYg6g&list=PLc7W4b0WHTAWxMsEuSUiccXPJtoPs_g9u&index=1
+	2) code      : https://github.com/lowlevellearning/lll-gpio-driver
 
 ## History
 NA
